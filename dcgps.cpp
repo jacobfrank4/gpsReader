@@ -9,7 +9,7 @@
 --
 -- DATE: October 12, 2016
 --
--- REVISIONS: (Date and Description)
+-- REVISIONS: (Programmer: Date: Description)
 --
 -- DESIGNER: Jacob Frank & Justen DePourcq
 --
