@@ -29,7 +29,8 @@
 #include <stdio.h>
 //#include "gps-utils.cpp"
 using namespace std;
-void readGPS();
+void startThread(gpsmm& gps);
+void readGPS(gpsmm gps);
 
 int main() {
     gpsmm gps_struct("localhost", DEFAULT_GPSD_PORT);
@@ -42,5 +43,5 @@ int main() {
     }
     cout << "After if statement" << endl;
 
-    readGPS();
+    startThread(gps_struct);
 }
