@@ -32,16 +32,17 @@ using namespace std;
 void startThread(gpsmm& gps);
 void readGPS(gpsmm gps);
 
-int main() {
-    gpsmm gps_struct("localhost", DEFAULT_GPSD_PORT);
+int main(void) {
+    gpsmm gpsStruct("localhost", DEFAULT_GPSD_PORT);
 
     cout << "Before if statement" << endl;
 
-    if(gps_struct.stream(WATCH_ENABLE|WATCH_JSON) == NULL) {
+    if(gpsStruct.stream(WATCH_ENABLE|WATCH_JSON) == NULL) {
         cerr << "No GPSD Running. \n";
         return 1;
     }
     cout << "After if statement" << endl;
 
-    startThread(gps_struct);
+    readGPS(gpsStruct);
+//    startThread(gpsStruct);
 }
