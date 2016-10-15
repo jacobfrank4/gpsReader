@@ -17,27 +17,33 @@ void startThread(gpsmm& gps) {
 }
 
 void readGPS(gpsmm gps) {
+    int timeoutCounter = 0;
     cout << "Before for loop" << endl;
     for (;;) {
-        //cout << "before GPS struct creation" << endl;
+        cout << "before GPS struct creation" << endl;
         struct gps_data_t* newdata;
-       // cout << "After GPS struct creation" << endl;
+        cout << "After GPS struct creation" << endl;
 
-       // cout << "Before waiting statement" << endl;
-       // if (!gps.waiting(50000000)) {
-       //     cout << "inside waiting statement" << endl;
-       //     continue;
-        //}
-        //cout << "After waiting statement" << endl;
+        cout << "Before waiting statement" << endl;
+        if (!gps.waiting(50000000)) {
+            cout << "inside waiting statement" << endl;
+            timeoutCounter++;
+	    if(timeoutCounter > 1000) {
+		cout << "GPS Time Out" << endl;
+		break;
+	    }
+	    continue;
+        }
+        cout << "After waiting statement" << endl;
 
-       // cout << "Before read statement" << endl;
-      //  if ((newdata = gps.read()) == NULL) { //SEG FAULTS HERE***********
-     //       cerr << "Read error.\n";
-     //       return;
-     //   } else {
+        cout << "Before read statement" << endl;
+        if ((newdata = gps.read()) == NULL) { //SEG FAULTS HERE***********
+            cerr << "Read error.\n";
+            return;
+        } else {
      //       cout << "inside readGPS" << endl;
             print();
-       // }
+        }
         cout << "After read statement" << endl;
     }
 }
