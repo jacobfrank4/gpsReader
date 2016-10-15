@@ -2,30 +2,31 @@
 
 #include <iostream>
 #include <libgpsmm.h>
-#include <gps.h>
+//#include <gps.h>
 #include <stdio.h>
 #include <thread>
+//#include <utility>
 using namespace std;
-void readGPS(gpsmm gp);
+void readGPS(gpsmm gps);
 void print();
 
-
-void startThread(gpsmm& gps) {
+//Currently I bypass this thread function and just call readGPS from Main()
+//If I figure out how to properly implement this thread, I will reinstate this function
+void startThread(gpsmm& gpsStruct) {
     cout << "inside start thread" << endl;
-    thread gpsThread(readGPS, gps);
+    thread gpsThread(readGPS, gpsStruct);
     gpsThread.join();
 }
 
-void readGPS(gpsmm gps) {
+void readGPS(gpsmm gpsStruct) {
     int timeoutCounter = 0;
     cout << "Before for loop" << endl;
+
     for (;;) {
-        cout << "before GPS struct creation" << endl;
-        struct gps_data_t* newdata;
-        cout << "After GPS struct creation" << endl;
+         struct gps_data_t* newdata;
 
         cout << "Before waiting statement" << endl;
-        if (!gps.waiting(50000000)) {
+        if (!gpsStruct.waiting(50000000)) {
             cout << "inside waiting statement" << endl;
             timeoutCounter++;
 	    if(timeoutCounter > 1000) {
@@ -33,21 +34,22 @@ void readGPS(gpsmm gps) {
 		break;
 	    }
 	    continue;
-        }
+       }
         cout << "After waiting statement" << endl;
 
         cout << "Before read statement" << endl;
-        if ((newdata = gps.read()) == NULL) { //SEG FAULTS HERE***********
+        if ((newdata = gpsStruct.read()) == nullptr) { //SEG FAULTS HERE WHEN THREAD IS USED******
             cerr << "Read error.\n";
             return;
         } else {
-     //       cout << "inside readGPS" << endl;
-            print();
+            cout << "inside readGPS" << endl;
+            print();// Need to call actual print statement
         }
         cout << "After read statement" << endl;
     }
 }
 
+//Once Correct print function has been implemented, delete this function
 void print() {
     cout << "Print statement" << endl;
 }
