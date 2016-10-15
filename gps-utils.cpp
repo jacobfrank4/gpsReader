@@ -29,10 +29,10 @@ void readGPS(gpsmm gpsStruct) {
         if (!gpsStruct.waiting(50000000)) {
             cout << "inside waiting statement" << endl;
             timeoutCounter++;
-	    if(timeoutCounter > 1000) {
-		cout << "GPS Time Out" << endl;
-		break;
-	    }
+            if(timeoutCounter > 1000) {
+                cout << "GPS Time Out" << endl;
+                break;
+            }
 	    continue;
        }
         cout << "After waiting statement" << endl;
