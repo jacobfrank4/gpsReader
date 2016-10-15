@@ -30,14 +30,14 @@ void readGPS(gpsmm gps) {
         //}
         //cout << "After waiting statement" << endl;
 
-        cout << "Before read statement" << endl;
-        if ((newdata = gps.read()) == NULL) { //SEG FAULTS HERE***********
-            cerr << "Read error.\n";
-            return;
-        } else {
-            cout << "inside readGPS" << endl;
+       // cout << "Before read statement" << endl;
+      //  if ((newdata = gps.read()) == NULL) { //SEG FAULTS HERE***********
+     //       cerr << "Read error.\n";
+     //       return;
+     //   } else {
+     //       cout << "inside readGPS" << endl;
             print();
-        }
+       // }
         cout << "After read statement" << endl;
     }
 }
