@@ -31,13 +31,13 @@ void location(struct gps_data_t *gpsdata) {
     
     if(gpsdata->fix.mode == 2) {
         if(lat < 0 && lon >= 0) {
-          cout << abs(lat) << "S" << "\t" << lon << "E" << endl;
+          cout << "Latitude: " << abs(lat) << "S" << "\t" << "Longitude: " << lon << "E" << endl;
         } else if(lat < 0 && lon <0) {
-            cout << abs(lat) << "S" << "\t" << abs(lon) << "W" << endl;
+            cout << "Latitude: " << abs(lat) << "S" << "\t" << "Longitude: " << abs(lon) << "W" << endl;
         } else if (lat >=0 && lon < 0) {
-            cout << lat << "N" << "\t" << abs(lon) << "W" << endl;
+            cout << "Latitude: " << lat << "N" << "\t" << "Longitude: " << abs(lon) << "W" << endl;
         } else {
-            cout << lat << "N" << "\t" << lon << "E" << endl;
+            cout << "Latitude: " << lat << "N" << "\t" << "Longitude: " << lon << "E" << endl;
         }
         
         cout << "Satus: 2D Fix" << endl;
@@ -45,14 +45,14 @@ void location(struct gps_data_t *gpsdata) {
     }
     
     if(gpsdata->fix.mode == 3) {
-        if(lat < 0 && lon >= 0) {
-            cout << abs(lat) << "S" << "\t" << lon << "E" << endl;
+       if(lat < 0 && lon >= 0) {
+          cout << "Latitude: " << abs(lat) << "S" << "\t" << "Longitude: " << lon << "E" << endl;
         } else if(lat < 0 && lon <0) {
-            cout << abs(lat) << "S" << "\t" << abs(lon) << "W" << endl;
+            cout << "Latitude: " << abs(lat) << "S" << "\t" << "Longitude: " << abs(lon) << "W" << endl;
         } else if (lat >=0 && lon < 0) {
-            cout << lat << "N" << "\t" << abs(lon) << "W" << endl;
+            cout << "Latitude: " << lat << "N" << "\t" << "Longitude: " << abs(lon) << "W" << endl;
         } else {
-            cout << lat << "N" << "\t" << lon << "E" << endl;
+            cout << "Latitude: " << lat << "N" << "\t" << "Longitude: " << lon << "E" << endl;
         }
         
         cout << "Status: 3D Fix" << "\t" << "Altitude: " << gpsdata->fix.altitude << "m" << endl;
@@ -76,4 +76,5 @@ void information(struct gps_data_t *gpsdata) {
             }
         }
     }
+    cout << "\n";
 }
