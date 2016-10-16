@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <gps.h>
+#include <cmath>
 using namespace std;
 
 void time(struct gps_data_t *gpsdata);
