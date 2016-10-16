@@ -23,7 +23,8 @@ void time(struct gps_data_t *gpsdata) {
     struct tm *ptm;
     
     ptm = gmtime(&gpsTime);
-    cout << ptm->tm_hour << ptm->tm_min << "  ";
+    cout << ptm->tm_year << "-" << ptm->tm_mon << "-" << ptm->tm_mday << "T" <<ptm->tm_hour << ":" <<ptm->tm_min<< ":"<< ptm->tm_sec << "\t";
+}
 }
 
 void location(struct gps_data_t *gpsdata) {
