@@ -10,7 +10,7 @@ void time(struct gps_data_t *gpsdata);
 void location(struct gps_data_t *gpsdata);
 void information(struct gps_data_t *gpsdata);
 
-int gps_data(struct gps_data_t *gpsdata) {
+void gps_data(struct gps_data_t *gpsdata) {
 	cout << "before time call" << endl;
     time(gpsdata);
 	cout << "after time call" << endl;
