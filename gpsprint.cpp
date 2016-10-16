@@ -47,8 +47,8 @@ void location(struct gps_data_t *gpsdata) {
 void information(struct gps_data_t *gpsdata) {
     
     
-    if(gpsdata->satelites_visible !=0) {
-        for(int i = 0; i < gpsdata->satelites_visible; i++) {
+    if(gpsdata->satellites_visible !=0) {
+        for(int i = 0; i < gpsdata->satellites_visible; i++) {
             cout << "PRN: " + gpsdata->PRN[i] << "\t";
             cout << "Elevation: " + gpsdata->elevation[i] << "\t";
             cout << "Azimuth: " + gpsdata->azimuth[i] << "\t";
