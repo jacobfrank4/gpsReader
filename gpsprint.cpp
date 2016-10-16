@@ -65,10 +65,10 @@ void information(struct gps_data_t *gpsdata) {
     
     if(gpsdata->satellites_visible !=0) {
         for(int i = 0; i < gpsdata->satellites_visible; i++) {
-            cout << "PRN: " + gpsdata->PRN[i] << "\t";
-            cout << "Elevation: " + gpsdata->elevation[i] << "\t";
-            cout << "Azimuth: " + gpsdata->azimuth[i] << "\t";
-            cout << "SNR: " + gpsdata->ss[i] << "\t";
+            cout << "PRN: " << gpsdata->PRN[i] << "\t";
+            cout << "Elevation: " << gpsdata->elevation[i] << "\t";
+            cout << "Azimuth: " << gpsdata->azimuth[i] << "\t";
+            cout << "SNR: " << gpsdata->ss[i] << "\t";
             if(gpsdata->used[i]) {
                 cout << "Used: " << "Y" << endl;
             } else {
