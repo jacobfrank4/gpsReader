@@ -27,7 +27,7 @@
 #include <libgpsmm.h>
 #include <gps.h>
 #include <stdio.h>
-//#include "gps-utils.cpp"
+
 using namespace std;
 void startThread(gpsmm& gps);
 void readGPS(gpsmm gps);
@@ -35,14 +35,10 @@ void readGPS(gpsmm gps);
 int main(void) {
     gpsmm gpsStruct("localhost", DEFAULT_GPSD_PORT);
 
-    cout << "Before if statement" << endl;
-
     if(gpsStruct.stream(WATCH_ENABLE|WATCH_JSON) == NULL) {
         cerr << "No GPSD Running. \n";
         return 1;
     }
-    cout << "After if statement" << endl;
-
+    //Passes the gpsmm to the read function for interpreting of the stallite gps data
     readGPS(gpsStruct);
-//    startThread(gpsStruct);
 }
