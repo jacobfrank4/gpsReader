@@ -32,6 +32,7 @@ void location(struct gps_data_t *gpsdata) {
         cout << lat << "\t" << lon << endl;
     } else {
         cout << "N/A" << "\t" << "N/A" << endl;
+    }
     
 }
 
