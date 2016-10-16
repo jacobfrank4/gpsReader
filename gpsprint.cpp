@@ -11,33 +11,27 @@ void location(struct gps_data_t *gpsdata);
 void information(struct gps_data_t *gpsdata);
 
 void gps_data(struct gps_data_t *gpsdata) {
-	cout << "before time call" << endl;
     time(gpsdata);
-	cout << "after time call" << endl;
-	cout << "before location call" << endl;
     location(gpsdata);
-	cout << "after location call" << endl;
-	cout << "before information call" << endl;
     information(gpsdata);
-	cout << "after information call" << endl;
 }
 void time(struct gps_data_t *gpsdata) {
-	cout << "beginning of time method" << endl;
     time_t gpsTime;
     gpsTime = (time_t) gpsdata->fix.time;
-    cout << ctime(gmtime(&gpsTime)) << endl;
-	cout << "end of time method" << endl;
+    cout << ctime(gmtime(&gpsTime)) << "\t";
 }
 
 void location(struct gps_data_t *gpsdata) {
     
     double lat;
     double lon;
-    
     lat = gpsdata->fix.latitude;
     lon = gpsdata->fix.longitude;
-    cout << "latitude" << lat << endl;
-    cout << "longitude" << lon << endl;
+    
+    if(gpsdata->fix.mode >= 2) {
+        cout << lat << "\t" << lon << endl;
+    }
+    
 }
 
 void information(struct gps_data_t *gpsdata) {
