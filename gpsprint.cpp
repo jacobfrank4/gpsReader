@@ -19,7 +19,11 @@ void print_gps_data(struct gps_data_t *gpsdata) {
 void time(struct gps_data_t *gpsdata) {
     time_t gpsTime;
     gpsTime = (time_t) gpsdata->fix.time;
-    cout << ctime(&gpsTime)) << "  ";
+    time(&gpsTime);
+    struct tm *ptm;
+    
+    ptm = gmtime(&gpsTime);
+    cout << ptm->tm_hour << ptm->tm_min << "  ";
 }
 
 void location(struct gps_data_t *gpsdata) {
