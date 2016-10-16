@@ -2,13 +2,13 @@
 
 #include <iostream>
 #include <libgpsmm.h>
-//#include <gps.h>
 #include <stdio.h>
 #include <thread>
-//#include <utility>
+
 using namespace std;
 void readGPS(gpsmm gps);
 void print();
+void print_data(struct gps_data_t *gpsdata);
 
 //Currently I bypass this thread function and just call readGPS from Main()
 //If I figure out how to properly implement this thread, I will reinstate this function
@@ -20,32 +20,32 @@ void startThread(gpsmm& gpsStruct) {
 
 void readGPS(gpsmm gpsStruct) {
     int timeoutCounter = 0;
-    cout << "Before for loop" << endl;
+//    cout << "Before for loop" << endl;
 
     for (;;) {
          struct gps_data_t* newdata;
 
-        cout << "Before waiting statement" << endl;
+//        cout << "Before waiting statement" << endl;
         if (!gpsStruct.waiting(50000000)) {
-            cout << "inside waiting statement" << endl;
+//            cout << "inside waiting statement" << endl;
             timeoutCounter++;
             if(timeoutCounter > 1000) {
-                cout << "GPS Time Out" << endl;
+//                cout << "GPS Time Out" << endl;
                 break;
             }
 	    continue;
        }
-        cout << "After waiting statement" << endl;
+//        cout << "After waiting statement" << endl;
 
-        cout << "Before read statement" << endl;
+//        cout << "Before read statement" << endl;
         if ((newdata = gpsStruct.read()) == nullptr) { //SEG FAULTS HERE WHEN THREAD IS USED******
-            cerr << "Read error.\n";
+//            cerr << "Read error.\n";
             return;
         } else {
             cout << "inside readGPS" << endl;
-            print();// Need to call actual print statement
+            print_data(newdata);// Need to call actual print statement
         }
-        cout << "After read statement" << endl;
+//        cout << "After read statement" << endl;
     }
 }
 
