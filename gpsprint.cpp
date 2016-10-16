@@ -60,4 +60,5 @@ void information(struct gps_data_t *gpsdata) {
             }
         }
     }
+    cout << "\n";
 }
