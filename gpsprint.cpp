@@ -11,15 +11,22 @@ void location(struct gps_data_t *gpsdata);
 void information(struct gps_data_t *gpsdata);
 
 int gps_data(struct gps_data_t *gpsdata) {
+	cout << "before time call" << endl;
     time(gpsdata);
+	cout << "after time call" << endl;
+	cout << "before location call" << endl;
     location(gpsdata);
+	cout << "after location call" << endl;
+	cout << "before information call" << endl;
     information(gpsdata);
+	cout << "after information call" << endl;
 }
 void time(struct gps_data_t *gpsdata) {
-	
+	cout << "beginning of time method" << endl;
     time_t gpsTime;
     gpsTime = (time_t) gpsdata->fix.time;
     cout << gmtime(&gpsTime) << endl;
+	cout << "end of time method" << endl;
 }
 
 void location(struct gps_data_t *gpsdata) {
