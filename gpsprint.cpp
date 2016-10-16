@@ -25,7 +25,7 @@ void time(struct gps_data_t *gpsdata) {
 	cout << "beginning of time method" << endl;
     time_t gpsTime;
     gpsTime = (time_t) gpsdata->fix.time;
-    cout << localtime(&gpsTime) << endl;
+    cout << ctime(gmtime(&gpsTime)) << endl;
 	cout << "end of time method" << endl;
 }
 
