@@ -41,11 +41,11 @@ void information(struct gps_data_t *gpsdata) {
     short azimuth;
     double SNR;
     
-    azimuth = gpsdata->azimuth;
-    use = gpsdata->used;
-    prn = gpsdata->PRN;
-    elevate = gpsdata->elevation;
-    SNR = gpsdata->ss;
+    azimuth = gpsdata->azimuth[0];
+    use = gpsdata->used[0];
+    prn = gpsdata->PRN[0];
+    elevate = gpsdata->elevation[0];
+    SNR = gpsdata->ss[0];
     
     cout << "azimuth: " << azimuth << endl;
     cout << "used: " << use << endl;
