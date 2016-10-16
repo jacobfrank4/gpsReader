@@ -10,7 +10,7 @@ void time(struct gps_data_t *gpsdata);
 void location(struct gps_data_t *gpsdata);
 void information(struct gps_data_t *gpsdata);
 
-void gps_data(struct gps_data_t *gpsdata) {
+void print_gps_data(struct gps_data_t *gpsdata) {
     time(gpsdata);
     location(gpsdata);
     information(gpsdata);
@@ -30,7 +30,8 @@ void location(struct gps_data_t *gpsdata) {
     
     if(gpsdata->fix.mode >= 2) {
         cout << lat << "\t" << lon << endl;
-    }
+    } else {
+        cout << "N/A" << "\t" << "N/A" << endl;
     
 }
 
