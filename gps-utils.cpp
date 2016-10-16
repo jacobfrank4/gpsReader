@@ -15,7 +15,7 @@ void readGPS(gpsmm gpsStruct) {
     int timeoutCounter = 0;
 
     for (;;) {
-        struct gps_data_t* newdata;
+        struct gps_data_t* gpsData;
 
         if (!gpsStruct.waiting(50000000)) {
             timeoutCounter++;
@@ -27,10 +27,10 @@ void readGPS(gpsmm gpsStruct) {
 	    continue;
         }
 
-        if ((newdata = gpsStruct.read()) == nullptr) {
+        if ((gpsData = gpsStruct.read()) == nullptr) {
             return;
         } else {
-            print_data(newdata);// Need to call actual print statement
+            print_data(gpsData);
         }
     }
 }
