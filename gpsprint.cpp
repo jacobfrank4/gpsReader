@@ -55,7 +55,7 @@ void location(struct gps_data_t *gpsdata) {
             cout << lat << "N" << "\t" << lon << "E" << endl;
         }
         
-        cout << "Status: 3D Fix" << "Altitude: " << gpsdata->fix.altitude << endl;
+        cout << "Status: 3D Fix" << "\t" << "Altitude: " << gpsdata->fix.altitude << "m" << endl;
     }
     
 }
