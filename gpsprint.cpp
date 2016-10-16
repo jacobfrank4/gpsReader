@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <gps.h>
-#include <cmath>
 using namespace std;
 
 void time(struct gps_data_t *gpsdata);
@@ -29,17 +28,33 @@ void location(struct gps_data_t *gpsdata) {
     lat = gpsdata->fix.latitude;
     lon = gpsdata->fix.longitude;
     
-    if(gpsdata->fix.mode >= 2) {
+    if(gpsdata->fix.mode == 2) {
         if(lat < 0 && lon >= 0) {
-          cout <<"Latitude: " <<abs(lat) << "S" << "\t" << "Longitude: " << lon << "E" << endl;
+          cout << abs(lat) << "S" << "\t" << lon << "E" << endl;
         } else if(lat < 0 && lon <0) {
-            cout << "Latitude: " << abs(lat) << "S" << "\t" << "Longitude: " << abs(lon) << "W" << endl;
+            cout << abs(lat) << "S" << "\t" << abs(lon) << "W" << endl;
         } else if (lat >=0 && lon < 0) {
-            cout << "Latitude: " << lat << "N" << "\t" << "Longitude: " << abs(lon) << "W" << endl;
+            cout << lat << "N" << "\t" << abs(lon) << "W" << endl;
         } else {
-            cout << "Latitude: " << lat << "N" << "\t" << "Longitude: " << lon << "E" << endl;
+            cout << lat << "N" << "\t" << lon << "E" << endl;
         }
         
+        cout << "Satus: 2D Fix" << endl;
+        
+    }
+    
+    if(gpsdata->fix.mode == 3) {
+        if(lat < 0 && lon >= 0) {
+            cout << abs(lat) << "S" << "\t" << lon << "E" << endl;
+        } else if(lat < 0 && lon <0) {
+            cout << abs(lat) << "S" << "\t" << abs(lon) << "W" << endl;
+        } else if (lat >=0 && lon < 0) {
+            cout << lat << "N" << "\t" << abs(lon) << "W" << endl;
+        } else {
+            cout << lat << "N" << "\t" << lon << "E" << endl;
+        }
+        
+        cout << "Status: 3D Fix" << "Altitude: " << gpsdata->fix.altitude << endl;
     }
     
 }
@@ -47,12 +62,12 @@ void location(struct gps_data_t *gpsdata) {
 void information(struct gps_data_t *gpsdata) {
     
     
-    if(gpsdata->satellites_visible !=0) {
-        for(int i = 0; i < gpsdata->satellites_visible; i++) {
-            cout << "PRN: " << gpsdata->PRN[i] << "\t";
-            cout << "Elevation: " << gpsdata->elevation[i] << "\t";
-            cout << "Azimuth: " << gpsdata->azimuth[i] << "\t";
-            cout << "SNR: " << gpsdata->ss[i] << "\t";
+    if(gpsdata->satelites_visible !=0) {
+        for(int i = 0; i < gpsdata->satelites_visible; i++) {
+            cout << "PRN: " + gpsdata->PRN[i] << "\t";
+            cout << "Elevation: " + gpsdata->elevation[i] << "\t";
+            cout << "Azimuth: " + gpsdata->azimuth[i] << "\t";
+            cout << "SNR: " + gpsdata->ss[i] << "\t";
             if(gpsdata->used[i]) {
                 cout << "Used: " << "Y" << endl;
             } else {
@@ -60,5 +75,4 @@ void information(struct gps_data_t *gpsdata) {
             }
         }
     }
-    cout << "\n";
 }
