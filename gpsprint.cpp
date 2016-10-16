@@ -12,6 +12,8 @@ void information();
 
 int main(void) {
     time();
+    location();
+    information();
 }
 void time() {
     
@@ -30,16 +32,29 @@ void location() {
     
     lat = gpsdata.fix.latitude;
     lon = gpsdata.fix.latitude;
+    cout << "latitude" << lat << endl;
+    cout << "longitude" << lon << endl;
 }
 
 void information() {
     
-    struct gps_data_t gpsdata;
+    struct gps_data_t data;
+    struct satellite_t sat;
     bool use;
     short prn;
     short elevate;
     short azimuth;
     double SNR;
     
-    elevate = gpsdata.azimuth;
+    azimuth = sat.azimuth;
+    use = sat.used;
+    prn = sat.PRN;
+    elevate = sat.elevation;
+    SNR = sat.ss;
+    
+    cout << "azimuth: " << azimuth << endl;
+    cout << "used: " << use << endl;
+    cout << "prn: " <<prn << endl;
+    cout << "elevation: " << elevate << endl;
+    cout << "SNR: " <<SNR << endl;
 }
