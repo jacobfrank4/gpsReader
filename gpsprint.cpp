@@ -6,51 +6,46 @@
 #include <gps.h>
 using namespace std;
 
-void time();
-void location();
-void information();
+void time(struct gps_data_t *gpsdata);
+void location(struct gps_data_t *gpsdata);
+void information(struct gps_data_t *gpsdata);
 
-int main(void) {
-    time();
-    location();
-    information();
+int gps_data(struct gps_data_t *gpsdata) {
+    time(gpsdata);
+    location(gpsdata);
+    information(gpsdata);
 }
-void time() {
-    
-    struct gps_data_t gpsdata;
+void time(struct gps_data_t *gpsdata) {
 	
     time_t gpsTime;
-    gpsTime = (time_t) gpsdata.fix.time;
+    gpsTime = (time_t) gpsdata->fix.time;
     cout << gmtime(&gpsTime) << endl;
 }
 
-void location() {
+void location(struct gps_data_t *gpsdata) {
     
-    struct gps_data_t gpsdata;
     double lat;
     double lon;
     
-    lat = gpsdata.fix.latitude;
-    lon = gpsdata.fix.latitude;
+    lat = gpsdata->fix.latitude;
+    lon = gpsdata->fix.latitude;
     cout << "latitude" << lat << endl;
     cout << "longitude" << lon << endl;
 }
 
-void information() {
+void information(struct gps_data_t *gpsdata) {
     
-    struct gps_data_t data;
-    struct satellite_t sat;
     bool use;
     short prn;
     short elevate;
     short azimuth;
     double SNR;
     
-    azimuth = data.azimuth;
-    use = data.used;
-    prn = data.PRN;
-    elevate = data.elevation;
-    SNR = data.ss;
+    azimuth = gpsdata->azimuth;
+    use = gpsdata->used;
+    prn = gpsdata->PRN;
+    elevate = gpsdata->elevation;
+    SNR = gpsdata->ss;
     
     cout << "azimuth: " << azimuth << endl;
     cout << "used: " << use << endl;
