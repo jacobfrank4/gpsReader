@@ -46,11 +46,11 @@ void information() {
     short azimuth;
     double SNR;
     
-    azimuth = sat.azimuth;
-    use = sat.used;
-    prn = sat.PRN;
-    elevate = sat.elevation;
-    SNR = sat.ss;
+    azimuth = data.azimuth;
+    use = data.used;
+    prn = data.PRN;
+    elevate = data.elevation;
+    SNR = data.ss;
     
     cout << "azimuth: " << azimuth << endl;
     cout << "used: " << use << endl;
