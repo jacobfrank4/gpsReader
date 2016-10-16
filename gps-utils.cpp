@@ -8,7 +8,7 @@
 using namespace std;
 void readGPS(gpsmm gps);
 void print();
-void print_data(struct gps_data_t *gpsdata);
+void gps_data(struct gps_data_t *gpsdata);
 
 
 void readGPS(gpsmm gpsStruct) {
@@ -30,7 +30,8 @@ void readGPS(gpsmm gpsStruct) {
         if ((gpsData = gpsStruct.read()) == nullptr) {
             return;
         } else {
-            print_data(gpsData);
+            cout << "before gps_data call, from gps-utils.cpp" << endl;
+	    gps_data(gpsData);
         }
     }
 }
