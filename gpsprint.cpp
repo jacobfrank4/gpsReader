@@ -31,12 +31,14 @@
 #include <gps.h>
 #include <cmath>
 #include <ncurses.h>
+#include <sstream>
+#include <string>
 using namespace std;
 
-void time(struct gps_data_t *gpsdata);
-void location(struct gps_data_t *gpsdata);
-void information(struct gps_data_t *gpsdata, int satllite);
-void fixMode(struct gps_data_t *gpsdata);
+string getTime(struct gps_data_t *gpsdata);
+string location(struct gps_data_t *gpsdata);
+string information(struct gps_data_t *gpsdata, int satllite);
+string fixMode(struct gps_data_t *gpsdata);
 
 /*------------------------------------------------------------------------------------------------------------------
  -- FUNCTION: print_gps_data
@@ -72,31 +74,34 @@ void print_gps_data(struct gps_data_t *gpsdata) {
                 exit(EXIT_FAILURE);
             }
             getmaxyx(stdscr,row,col);
-            box(win, 0, 0);
-
+	    box(win, 0, 0); 
+	   
             //get time and print to screen
-            string time = time(gpsdata);
-            mvprintw(1,1,time.c_str());
+            string gpstime = getTime(gpsdata);
+            mvprintw(2,2,gpstime.c_str());
 
             //get location data and print to screen
-            string location = location(gpsdata);
-            mvprintw(2,1,time.c_str());
+            string gpslocation = location(gpsdata);
+            mvprintw(3,2,gpslocation.c_str());
 
             //get and print the fix mode
             string mode = fixMode(gpsdata);
-            mvprintw(3,1,mode.c_str());
+            mvprintw(4,2,mode.c_str());
 
             //Draws a horizontal line
-            move(4,1);
+            move(5,1);
             hline('_', (col-2));
 
             if(gpsdata->satellites_visible !=0) {
                 for(int i = 0; i < gpsdata->satellites_visible; i++) {
                     //get gps data and print to screen
-                    sting satinfo = information(gpsdata, i);
-                    mvprintw((5+i),1,mode.c_str());
+                    string satinfo = information(gpsdata, i);
+                    mvprintw((7+i),2,satinfo.c_str());
                 }
             }
+            wnoutrefresh(win);
+            getch();
+            //endwin();
         }
     }
 }
@@ -123,8 +128,8 @@ void print_gps_data(struct gps_data_t *gpsdata) {
  -- and prints it to the command line.
  ----------------------------------------------------------------------------------------------------------------------*/
 
-string time(struct gps_data_t *gpsdata) {
-    stringstream time;
+string getTime(struct gps_data_t *gpsdata) {
+    stringstream utcTime;
 
     time_t gpsTime;
     gpsTime = (time_t) gpsdata->fix.time;
@@ -132,9 +137,9 @@ string time(struct gps_data_t *gpsdata) {
     struct tm *ptm;
     
     ptm = gmtime(&gpsTime);
-    time << ptm->tm_year+1900 << "-" << ptm->tm_mon+1 << "-" << ptm->tm_mday << "T" <<ptm->tm_hour << ":" <<ptm->tm_min<< ":"<< ptm->tm_sec;
+    utcTime << ptm->tm_year+1900 << "-" << ptm->tm_mon+1 << "-" << ptm->tm_mday << "T" <<ptm->tm_hour << ":" <<ptm->tm_min<< ":"<< ptm->tm_sec;
     
-    return time.str();
+    return utcTime.str();
 }
 
 
@@ -221,7 +226,7 @@ string location(struct gps_data_t *gpsdata) {
  -- azimuth, SNR, and wheter the satelite is used or not and prints it to the command line.
  ----------------------------------------------------------------------------------------------------------------------*/
 
-void information(struct gps_data_t *gpsdata, int satllite) {
+string information(struct gps_data_t *gpsdata, int satllite) {
     stringstream satInfo;
 
     satInfo << "PRN: " << gpsdata->PRN[satllite] << "\t";
