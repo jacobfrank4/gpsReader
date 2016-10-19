@@ -139,9 +139,7 @@ void location(struct gps_data_t *gpsdata) {
         
         cout << "Satus: 2D Fix" << endl;
         
-    }
-    
-    if(gpsdata->fix.mode == 3) {
+    } else if(gpsdata->fix.mode == 3) {
         if(lat < 0 && lon >= 0) {
             cout << "Latitude: " << abs(lat) << "S" << "\t" << "Longitude: " << lon << "E" << endl;
         } else if(lat < 0 && lon <0) {
@@ -153,6 +151,8 @@ void location(struct gps_data_t *gpsdata) {
         }
         
         cout << "Status: 3D Fix" << "\t" << "Altitude: " << gpsdata->fix.altitude << "m" << endl;
+    } else {
+        cout << "Latitude: " << "NA" << "\t" << "Longitude" << "NA" << endl;
     }
     
 }
