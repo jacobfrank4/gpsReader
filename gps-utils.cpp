@@ -49,7 +49,7 @@ void readGPS(gpsmm gpsStruct) {
 	//Ensures the GPS struct is not null before passing it to the print function.
         if ((gpsData = gpsStruct.read()) == nullptr) {
             timeoutCounter++;
-	    return;
+	    break;
         } else {
 	    print_gps_data(gpsData);
         }
