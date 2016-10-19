@@ -12,7 +12,7 @@
  -- DATE: October 16, 2016
  --
  -- REVISIONS:
- --
+ -- October 17-19: Jacob Frank: Implemented nCurses library for simple terminal gui
  --
  -- DESIGNERS: Jacob Frank & Justen DePourcq
  --
@@ -122,7 +122,7 @@ void print_gps_data(struct gps_data_t *gpsdata) {
  -- INTERFACE: void print_gps_data(struct gps_data_t *gpsdata)
  --            struct gps_data_t *gpsdata: gps struct with updated information from satellites
  --
- -- RETURNS: void.
+ -- RETURNS: string.
  --
  -- NOTES:
  -- function that obtains the time from the gps struct, converts it to UTC
@@ -143,7 +143,20 @@ string getTime(struct gps_data_t *gpsdata) {
     return utcTime.str();
 }
 
-
+/*------------------------------------------------------------------------------------------------------------------
+ -- FUNCTION: fixMode(struct gps_data_t *gpsdata)
+ --
+ -- DATE: October 18, 2016
+ --
+ -- DESIGNER: Jacob Frank and Justen DePourq
+ --
+ -- PROGRAMMER: Jacob Frank
+ --
+ -- RETURNS: string.
+ --
+ -- NOTES:
+ -- receives gpsData and prints the mode
+ ----------------------------------------------------------------------------------------------------------------------*/
 string fixMode(struct gps_data_t *gpsdata) {
     stringstream fixMode;
 
@@ -171,7 +184,7 @@ string fixMode(struct gps_data_t *gpsdata) {
  -- INTERFACE: void print_gps_data(struct gps_data_t *gpsdata)
  --            struct gps_data_t *gpsdata: gps struct with updated information from satellites
  --
- -- RETURNS: void.
+ -- RETURNS: string.
  --
  -- NOTES:
  -- function obtains the latitude and longitude of the gps dongle from the staellites and prints
@@ -220,7 +233,7 @@ string location(struct gps_data_t *gpsdata) {
  -- INTERFACE: void print_gps_data(struct gps_data_t *gpsdata)
  --            struct gps_data_t *gpsdata: gps struct with updated information from satellites
  --
- -- RETURNS: void.
+ -- RETURNS: string.
  --
  -- NOTES:
  -- function that obtains the information of all the visible satelites including: PRN, elevation,
