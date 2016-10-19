@@ -58,7 +58,7 @@ void information(struct gps_data_t *gpsdata);
  ----------------------------------------------------------------------------------------------------------------------*/
 
 void print_gps_data(struct gps_data_t *gpsdata) {
- 	if(gpsdata->fix.mode >= 1) {
+ 	if(gpsdata->fix.mode >= 2) {
     	time(gpsdata);
     	location(gpsdata);
     	information(gpsdata);
@@ -154,7 +154,7 @@ void location(struct gps_data_t *gpsdata) {
         
         cout << "Status: 3D Fix" << "\t" << "Altitude: " << gpsdata->fix.altitude << "m" << endl;
     } else {
-        cout << "Latitude: " << "NA" << "\t" << "Longitude" << "NA" << endl;
+        cout << "Latitude: " << "NA" << "\t" << "Longitude: " << "NA" << endl;
     }
     
 }
