@@ -27,7 +27,6 @@
 #include "headers/dcgps.h"
 
 using namespace std;
-void startThread(gpsmm& gps);
 void readGPS(gpsmm gps);
 
 int main(int argc, char* argv[]) {
@@ -70,11 +69,7 @@ int main(int argc, char* argv[]) {
         cerr << "No GPSD Running. \n";
         return 1;
     }
-    WINDOW * win;
-    if ( (win = initscr()) == NULL ) {
-        fputs("Could not initialize screen.", stderr);
-        exit(EXIT_FAILURE);
-    }
+    
     //Passes the gpsmm to the read function for interpreting of the stallite gps data
     readGPS(gpsStruct);
 }
