@@ -24,12 +24,21 @@
  --
  -- The application will continue to run until it is exited by the user.
  ----------------------------------------------------------------------------------------------------------------------*/
-#include "headers/gpsprint.h"
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <gps.h>
+#include <cmath>
+#include <ncurses.h>
+#include <sstream>
+#include <string>
 using namespace std;
 
-void time(struct gps_data_t *gpsdata);
-void location(struct gps_data_t *gpsdata);
-void information(struct gps_data_t *gpsdata);
+string getTime(struct gps_data_t *gpsdata);
+string location(struct gps_data_t *gpsdata);
+string information(struct gps_data_t *gpsdata, int satllite);
+string fixMode(struct gps_data_t *gpsdata);
 
 /*------------------------------------------------------------------------------------------------------------------
  -- FUNCTION: print_gps_data
@@ -53,14 +62,55 @@ void information(struct gps_data_t *gpsdata);
  ----------------------------------------------------------------------------------------------------------------------*/
 
 void print_gps_data(struct gps_data_t *gpsdata) {
+cout << "just inside print" << endl;
     if(gpsdata->fix.mode >= 1) {
-        if(gpsdata->satellites_visible == 0) {
-            cout << "No satellites found" << endl;
-        } else {
-            system("clear");
-            time(gpsdata);
-            location(gpsdata);
-            information(gpsdata);
+       if(gpsdata->satellites_visible == 0) {
+           cout << "No satellites found" << endl;
+       } else if(gpsdata->fix.mode >=1) {
+cout << "fix mode > 1" << endl;
+            int col;
+            WINDOW * win;
+
+refresh();
+            if ( (win = initscr()) == NULL ) {
+                fputs("Could not initialize screen.", stderr);
+                exit(EXIT_FAILURE);
+            }
+
+            col = getmaxy(win);
+wborder(win, '|', '|' , '-', '-', '+','+','+','+');
+//	    box(win, 0, 0);
+cout << "before print time" << endl;
+            //get time and print to screen
+            string gpstime = getTime(gpsdata);
+            mvprintw(2,2,gpstime.c_str());
+cout << "before lcation" <<endl;
+            //get location data and print to screen
+            string gpslocation = location(gpsdata);
+            mvprintw(3,2,gpslocation.c_str());
+cout << "before mode" << endl;
+            //get and print the fix mode
+            string mode = fixMode(gpsdata);
+            mvprintw(4,2,mode.c_str());
+
+            //Draws a horizontal line
+            move(5,1);
+            hline('_', (col-2));
+cout << "before satllite data" << endl;
+            if(gpsdata->satellites_visible !=0) {
+                for(int i = 0; i < gpsdata->satellites_visible; i++) {
+                    //get gps data and print to screen
+                    string satinfo = information(gpsdata, i);
+                    mvprintw((7+i),2,satinfo.c_str());
+	        }
+            }
+cout << "Just before refresh" << endl;
+            refresh();
+
+            getch();
+//wclear(win);
+
+            endwin();
         }
     }
 }
@@ -87,17 +137,33 @@ void print_gps_data(struct gps_data_t *gpsdata) {
  -- and prints it to the command line.
  ----------------------------------------------------------------------------------------------------------------------*/
 
-void time(struct gps_data_t *gpsdata) {
+string getTime(struct gps_data_t *gpsdata) {
+    stringstream utcTime;
+
     time_t gpsTime;
     gpsTime = (time_t) gpsdata->fix.time;
     time(&gpsTime);
     struct tm *ptm;
     
     ptm = gmtime(&gpsTime);
-    cout << ptm->tm_year+1900 << "-" << ptm->tm_mon+1 << "-" << ptm->tm_mday << "T" <<ptm->tm_hour << ":" <<ptm->tm_min<< ":"<< ptm->tm_sec << endl;
+    utcTime << ptm->tm_year+1900 << "-" << ptm->tm_mon+1 << "-" << ptm->tm_mday << "T" <<ptm->tm_hour << ":" <<ptm->tm_min<< ":"<< ptm->tm_sec;
     
+    return utcTime.str();
 }
 
+
+string fixMode(struct gps_data_t *gpsdata) {
+    stringstream fixMode;
+
+    if(gpsdata->fix.mode == 2) {
+         fixMode << "Satus: 2D Fix";
+
+    } else if(gpsdata->fix.mode == 3) { 
+        fixMode << "Status: 3D Fix" << "\t" << "Altitude: " << gpsdata->fix.altitude << "m";
+    }
+
+    return fixMode.str();
+}
 
 /*------------------------------------------------------------------------------------------------------------------
  -- FUNCTION: location
@@ -121,42 +187,30 @@ void time(struct gps_data_t *gpsdata) {
  -- is also printed to the command line.
  ----------------------------------------------------------------------------------------------------------------------*/
 
-void location(struct gps_data_t *gpsdata) {
+string location(struct gps_data_t *gpsdata) {
     
     double lat;
     double lon;
     lat = gpsdata->fix.latitude;
     lon = gpsdata->fix.longitude;
+
+    stringstream latLong;
     
-    if(gpsdata->fix.mode == 2) {
+    if(gpsdata->fix.mode >= 2) {
         if(lat < 0 && lon >= 0) {
-            cout << "Latitude: " << abs(lat) << "S" << "\t" << "Longitude: " << lon << "E" << endl;
+            latLong << "Latitude: " << abs(lat) << "S" << "\t" << "Longitude: " << lon << "E";
         } else if(lat < 0 && lon <0) {
-            cout << "Latitude: " << abs(lat) << "S" << "\t" << "Longitude: " << abs(lon) << "W" << endl;
+            latLong << "Latitude: " << abs(lat) << "S" << "\t" << "Longitude: " << abs(lon) << "W";
         } else if (lat >=0 && lon < 0) {
-            cout << "Latitude: " << lat << "N" << "\t" << "Longitude: " << abs(lon) << "W" << endl;
+            latLong << "Latitude: " << lat << "N" << "\t" << "Longitude: " << abs(lon) << "W";
         } else {
-            cout << "Latitude: " << lat << "N" << "\t" << "Longitude: " << lon << "E" << endl;
+            latLong << "Latitude: " << lat << "N" << "\t" << "Longitude: " << lon << "E";
         }
         
-        cout << "Satus: 2D Fix" << endl;
-        
-    } else if(gpsdata->fix.mode == 3) {
-        if(lat < 0 && lon >= 0) {
-            cout << "Latitude: " << abs(lat) << "S" << "\t" << "Longitude: " << lon << "E" << endl;
-        } else if(lat < 0 && lon <0) {
-            cout << "Latitude: " << abs(lat) << "S" << "\t" << "Longitude: " << abs(lon) << "W" << endl;
-        } else if (lat >=0 && lon < 0) {
-            cout << "Latitude: " << lat << "N" << "\t" << "Longitude: " << abs(lon) << "W" << endl;
-        } else {
-            cout << "Latitude: " << lat << "N" << "\t" << "Longitude: " << lon << "E" << endl;
-        }
-        
-        cout << "Status: 3D Fix" << "\t" << "Altitude: " << gpsdata->fix.altitude << "m" << endl;
     } else {
-        cout << "Latitude: " << "NA" << "\t" << "Longitude: " << "NA" << endl;
+        latLong << "Latitude: " << "NA" << "\t" << "Longitude" << "NA";
     }
-    
+    return latLong.str();
 }
 
 
@@ -181,21 +235,17 @@ void location(struct gps_data_t *gpsdata) {
  -- azimuth, SNR, and wheter the satelite is used or not and prints it to the command line.
  ----------------------------------------------------------------------------------------------------------------------*/
 
-void information(struct gps_data_t *gpsdata) {
-    
-    
-    if(gpsdata->satellites_visible !=0) {
-        for(int i = 0; i < gpsdata->satellites_visible; i++) {
-            cout << "PRN: " << gpsdata->PRN[i] << "\t";
-            cout << "Elevation: " << gpsdata->elevation[i] << "\t";
-            cout << "Azimuth: " << gpsdata->azimuth[i] << "\t";
-            cout << "SNR: " << gpsdata->ss[i] << "\t";
-            if(gpsdata->used[i]) {
-                cout << "Used: " << "Y" << endl;
-            } else {
-                cout << "Used: " << "N" << endl;
-            }
-        }
+string information(struct gps_data_t *gpsdata, int satllite) {
+    stringstream satInfo;
+
+    satInfo << "PRN: " << gpsdata->PRN[satllite] << "\t";
+    satInfo << "Elevation: " << gpsdata->elevation[satllite] << "\t";
+    satInfo << "Azimuth: " << gpsdata->azimuth[satllite] << "\t";
+    satInfo << "SNR: " << gpsdata->ss[satllite] << "\t";
+    if(gpsdata->used[satllite]) {
+        satInfo << "Used: " << "Y";
+    } else {
+        satInfo << "Used: " << "N";
     }
-    cout << "\n";
+    return satInfo.str();
 }
