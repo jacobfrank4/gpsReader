@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-c -std=c++11 -Wall -W -pedantic
-CLIB= -lgps -pthread
+CLIB= -lgps -pthread -lncurses
 
 dcgps: dcgps.o gps-utils.o gpsprint.o
 		$(CC) -o dcgps dcgps.o gps-utils.o gpsprint.o $(CLIB)
