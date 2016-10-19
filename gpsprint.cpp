@@ -57,7 +57,7 @@ void print_gps_data(struct gps_data_t *gpsdata) {
         if(gpsdata->satellites_visible == 0) {
             cout << "No satellites found" << endl;
         } else {
-            system("cls");
+            system("clear");
             time(gpsdata);
             location(gpsdata);
             information(gpsdata);
