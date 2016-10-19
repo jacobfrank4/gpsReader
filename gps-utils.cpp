@@ -46,12 +46,13 @@ void readGPS(gpsmm gpsStruct) {
             }
 	    continue;
         }
-	
+	cout << "before if" << endl;
 	//Ensures the GPS struct is not null before passing it to the print function.
         if ((gpsData = gpsStruct.read()) == nullptr) {
 		cout << "break" << endl;
 	    	break;
         } else {
+	    cout << "before print call" << endl;
 	    print_gps_data(gpsData);
         }
     }
