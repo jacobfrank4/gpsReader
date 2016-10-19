@@ -19,7 +19,7 @@
  -- PROGRAMMER: Justen DePourcq
  --
  -- NOTES:
- -- This program will display the information obtained from the gps satellites to 
+ -- This program will display the information obtained from the gps satellites to
  -- the user via the command line
  --
  -- The application will continue to run until it is exited by the user.
@@ -58,11 +58,11 @@ void information(struct gps_data_t *gpsdata);
  ----------------------------------------------------------------------------------------------------------------------*/
 
 void print_gps_data(struct gps_data_t *gpsdata) {
- 	if(gpsdata->fix.mode >= 2) {
-    	time(gpsdata);
-    	location(gpsdata);
-    	information(gpsdata);
- 	}
+    if(gpsdata->fix.mode >= 1) {
+        time(gpsdata);
+        location(gpsdata);
+        information(gpsdata);
+    }
 }
 
 
