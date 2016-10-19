@@ -15,7 +15,10 @@ void print_gps_data(struct gps_data_t *gpsdata);
  --
  -- DATE: October 16, 2016
  --
- -- REVISIONS: (Date and Description)
+ -- REVISIONS: 
+ -- Justen DePourcq, October 18th 2016:
+ -- Created timeout counter and print statements, for looking for GPS
+ -- and eventually timing out.
  --
  -- DESIGNER: Jacob Frank and Justen DePourq
  --
