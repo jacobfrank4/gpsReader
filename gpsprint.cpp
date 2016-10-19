@@ -24,12 +24,7 @@
  --
  -- The application will continue to run until it is exited by the user.
  ----------------------------------------------------------------------------------------------------------------------*/
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <gps.h>
-#include <cmath>
+#include "headers/gpsprint.h"
 using namespace std;
 
 void time(struct gps_data_t *gpsdata);
