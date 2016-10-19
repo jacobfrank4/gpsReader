@@ -55,7 +55,7 @@ void readGPS(gpsmm gpsStruct) {
         if ((gpsData = gpsStruct.read()) == nullptr) {
             break;
         } else {
-            timeoutCounter = 0;
+            timeoutCounter = 1;
             print_gps_data(gpsData);
         }
     }
