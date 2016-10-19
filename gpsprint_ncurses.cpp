@@ -73,11 +73,8 @@ void print_gps_data(struct gps_data_t *gpsdata) {
                 fputs("Could not initialize screen.", stderr);
                 exit(EXIT_FAILURE);
             }
-timeout(1000);
-//refresh();
-//getch();
+	timeout(1000);
             col = getmaxy(win);
-//wborder(win, '|', '|' , '-', '-', '+','+','+','+');
 	    box(win, 0, 0);
 
             //get time and print to screen
@@ -106,8 +103,6 @@ timeout(1000);
 
             refresh();
             getch();
-//wclear(win);
-//move(0,0;
 //            endwin();
         }
     }
