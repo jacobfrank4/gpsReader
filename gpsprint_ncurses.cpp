@@ -103,7 +103,6 @@ void print_gps_data(struct gps_data_t *gpsdata) {
 
             refresh();
             getch();
-//            endwin();
         }
     }
 }
