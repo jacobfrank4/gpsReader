@@ -37,6 +37,7 @@ void readGPS(gpsmm gpsStruct) {
 	//the timout counter is incremented and GPS detection is tried again
 	//Can occur a maximum of 250 times before timing out and exiting program
         if (!gpsStruct.waiting(50000000)) {
+			cout << "Timeout++" << endl;
             timeoutCounter++;
 
             if(timeoutCounter > 250) {
@@ -48,8 +49,8 @@ void readGPS(gpsmm gpsStruct) {
 	
 	//Ensures the GPS struct is not null before passing it to the print function.
         if ((gpsData = gpsStruct.read()) == nullptr) {
-            timeoutCounter++;
-	    break;
+			cout << "break" << endl;
+	    	break;
         } else {
 	    print_gps_data(gpsData);
         }
