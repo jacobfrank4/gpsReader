@@ -24,11 +24,7 @@
 --
 -- The application will continue to run until it is exited by the user.
 ----------------------------------------------------------------------------------------------------------------------*/
-#include <iostream>
-#include <libgpsmm.h>
-#include <gps.h>
-#include <stdio.h>
-#include <string>
+#include "headers/dcgps.h"
 
 using namespace std;
 void startThread(gpsmm& gps);
