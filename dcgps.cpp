@@ -25,6 +25,7 @@
 -- The application will continue to run until it is exited by the user.
 ----------------------------------------------------------------------------------------------------------------------*/
 #include "headers/dcgps.h"
+#include <ncurses.h>
 
 using namespace std;
 void readGPS(gpsmm gps);
@@ -72,4 +73,5 @@ int main(int argc, char* argv[]) {
     
     //Passes the gpsmm to the read function for interpreting of the stallite gps data
     readGPS(gpsStruct);
+endwin();
 }
