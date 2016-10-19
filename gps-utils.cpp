@@ -50,7 +50,7 @@ void readGPS(gpsmm gpsStruct) {
                 cout << "No signal found, Timeout" << endl;
                 break;
             }
-            continue;
+            //continue;
         }
         //Ensures the GPS struct is not null before passing it to the print function.
         if ((gpsData = gpsStruct.read()) == nullptr) {
