@@ -36,7 +36,7 @@ void readGPS(gpsmm gpsStruct) {
         //If the function cannot detect a gps signal after 50 milliseconds
         //the timout counter is incremented and GPS detection is tried again
         //Can occur a maximum of 250 times before timing out and exiting program
-        if (!gpsStruct.waiting(500000)) {
+        if (gpsStruct.waiting(500000)) {
             timeoutCounter++;
             
             if(timeoutCounter == 1) {
@@ -47,6 +47,7 @@ void readGPS(gpsmm gpsStruct) {
             }
             
             if(timeoutCounter > 250) {
+                cout << "No signal found, Timeout" << endl;
                 break;
             }
             continue;
@@ -55,7 +56,7 @@ void readGPS(gpsmm gpsStruct) {
         if ((gpsData = gpsStruct.read()) == nullptr) {
             break;
         } else {
-            timeoutCounter = 1;
+            timeoutCounter = 0;
             print_gps_data(gpsData);
         }
     }
