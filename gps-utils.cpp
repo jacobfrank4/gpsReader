@@ -39,6 +39,9 @@ void readGPS(gpsmm gpsStruct) {
         if (!gpsStruct.waiting(500000)) {
             timeoutCounter++;
             
+            if(timeoutCounter == 0) {
+                cout << "Looking for GPS..." << endl;
+            }
             if(timeoutCounter % 40 == 0) {
                 cout << "Looking for GPS..." << endl;
             }
