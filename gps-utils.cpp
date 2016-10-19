@@ -52,7 +52,6 @@ void readGPS(gpsmm gpsStruct) {
         if ((gpsData = gpsStruct.read()) == nullptr) {
             break;
         } else {
-            cout << "before print call" << endl;
             print_gps_data(gpsData);
         }
     }
