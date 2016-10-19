@@ -58,11 +58,11 @@ void information(struct gps_data_t *gpsdata);
  ----------------------------------------------------------------------------------------------------------------------*/
 
 void print_gps_data(struct gps_data_t *gpsdata) {
- if(gpsdata->fix.mode >= 1) {
-    time(gpsdata);
-    location(gpsdata);
-    information(gpsdata);
- }
+ 	if(gpsdata->fix.mode >= 1) {
+    	time(gpsdata);
+    	location(gpsdata);
+    	information(gpsdata);
+ 	}
 }
 
 
