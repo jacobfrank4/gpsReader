@@ -1,13 +1,9 @@
 //gps-utils.cpp
 
-#include <iostream>
-#include <libgpsmm.h>
-#include <stdio.h>
-#include <thread>
+#include "headers/gps-utils.h"
 
 using namespace std;
 void readGPS(gpsmm gps);
-void print();
 void print_gps_data(struct gps_data_t *gpsdata);
 
 /*------------------------------------------------------------------------------------------------------------------
